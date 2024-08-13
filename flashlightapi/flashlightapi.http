@@ -1,0 +1,6 @@
+@flashlightapi_HostAddress = http://localhost:5010
+
+GET {{flashlightapi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
