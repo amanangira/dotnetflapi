@@ -1,3 +1,4 @@
+using flashlightapi;
 using flashlightapi.Data;
 using flashlightapi.Interfaces;
 using flashlightapi.Models;
@@ -17,6 +18,7 @@ builder.Services.AddDbContext<ApplicationDBContext>(options =>
         UseNpgsql(builder.Configuration.GetConnectionString("DefaultPostgreSQLConnection"));
 });
 builder.Services.AddControllers();
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAssignmentRepository, AssignmentRepository>();
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
