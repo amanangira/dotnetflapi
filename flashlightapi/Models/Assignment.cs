@@ -10,8 +10,8 @@ public class Assignment : Base
     
     public DateTime CloseAt { get; set; }
     
-    [ForeignKey(nameof(AppUser))]
-    public Guid CreatedById { get; set; }
-    
-    public virtual AppUser CreatedBy { get; set; }
+    // [ForeignKey(nameof(AppUser))]
+    // public Guid CreatedById { get; set; }
+    //
+    // public virtual AppUser CreatedBy { get; set; }
 }
