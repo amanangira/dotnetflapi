@@ -30,9 +30,9 @@ public class AssignmentController(IAssignmentRepository assignmentRepository, IM
     }
     
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] AssignmentCreateDTO assignmentCreateDto)
+    public async Task<IActionResult> Create([FromBody] CreateAssignmentDTO createAssignmentDto)
     {
-        var assignmentModel = assignmentCreateDto.ToAssignmentModel();
+        var assignmentModel = createAssignmentDto.ToAssignmentModel();
         await _assignmentRepository.CreateAsync(assignmentModel);
 
         return CreatedAtAction(nameof(Get), new { id = assignmentModel.Id }, _mapper.Map<AssignmentDTO>(assignmentModel));

@@ -18,9 +18,9 @@ public class AutoMapperProfile : Profile
         CreateMap<Assignment, AssignmentDTO>().ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title))
             .ForMember(dest => dest.CloseAt, opt => opt.MapFrom(src => src.CloseAt))
-            .ForMember(dest => dest.StartAt, opt => opt.MapFrom(src => src.StartAt));
-        // ForMember(dest => dest.CreatedById), opt => opt.MapFrom(src => src.CreatedById));
-        // ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.));
+            .ForMember(dest => dest.StartAt, opt => opt.MapFrom(src => src.StartAt))
+            .ForMember(dest => dest.CreatedById, opt => opt.MapFrom(src => src.CreatedById))
+            .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy));
 
         // CreateMap<List<Assignment>, List<AssignmentDTO>>();
         // CreateMap<AssignmentDTO, Assignment>();

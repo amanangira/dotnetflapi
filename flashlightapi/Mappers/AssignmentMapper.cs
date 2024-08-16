@@ -29,14 +29,14 @@ public static class AssignmentMapper
         };
     }
 
-    public static Assignment ToAssignmentModel(this AssignmentCreateDTO assignmentDto)
+    public static Assignment ToAssignmentModel(this CreateAssignmentDTO createAssignmentDto)
     {
         return new Assignment()
         {
-            Title = assignmentDto.Title,
-            CloseAt = assignmentDto.CloseAt,
-            StartAt = assignmentDto.StartAt,
-            // CreatedById = assignmentDto.CreatedById,
+            Title = createAssignmentDto.Title,
+            CloseAt = createAssignmentDto.CloseAt,
+            StartAt = createAssignmentDto.StartAt,
+            CreatedById = createAssignmentDto.CreatedById.ToString(),
         };
     }
 }

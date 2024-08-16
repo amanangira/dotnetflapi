@@ -13,7 +13,7 @@ public class AssignmentRepository(ApplicationDBContext _dbContext) : IAssignment
     
     public async Task<List<Assignment>> ListAsync(Queryable query)
     {
-        var builder = _dbContext.Assignment.AsQueryable();
+        var builder = _dbContext.Assignment.Include(s => s.CreatedBy).AsQueryable();
         if (query.Page > 0)
         {
             var skipCount = (int)(query.Page * (query.PageSize - 1));

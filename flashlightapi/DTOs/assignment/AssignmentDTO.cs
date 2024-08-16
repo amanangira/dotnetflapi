@@ -12,4 +12,6 @@ public class AssignmentDTO
     public DateTime StartAt { get; set; }
     
     public DateTime CloseAt { get; set; }
+    
+    public AccountDTO CreatedBy { get; set; }
 }

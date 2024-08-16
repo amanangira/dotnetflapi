@@ -3,7 +3,7 @@ using flashlightapi.Models;
 
 namespace flashlightapi.DTOs.assignment;
 
-public class AssignmentCreateDTO
+public class CreateAssignmentDTO
 {
     [Required]
     public string Title { get; set; }
@@ -16,4 +16,5 @@ public class AssignmentCreateDTO
 
     [Required]
     public DateTime CloseAt { get; set; }
+    
 }
