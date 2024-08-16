@@ -35,7 +35,5 @@ public class ApplicationDBContext : IdentityDbContext<AppUser>
         builder.Entity<IdentityRole>().HasData(roles);
     }
     
-    public DbSet<User> User { get; set; }
-    
     public DbSet<Assignment> Assignment { get; set; }
 }

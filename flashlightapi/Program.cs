@@ -23,7 +23,6 @@ builder.Services.AddDbContext<ApplicationDBContext>(options =>
 });
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
-builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAssignmentRepository, AssignmentRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 // Configure Identity

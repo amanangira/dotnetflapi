@@ -9,6 +9,4 @@ public class Assignment : Base
     public DateTime StartAt { get; set; }
     
     public DateTime CloseAt { get; set; }
-    
-    public User CreatedBy { get; set; }
 }

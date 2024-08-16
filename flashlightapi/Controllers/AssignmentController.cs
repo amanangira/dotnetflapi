@@ -11,7 +11,7 @@ namespace flashlightapi.Controllers;
 [Route("/api/assignment")]
 [ApiController]
 
-public class Assignment(IAssignmentRepository assignmentRepository, IMapper mapper): ControllerBase
+public class AssignmentController(IAssignmentRepository assignmentRepository, IMapper mapper): ControllerBase
 {
     private IAssignmentRepository _assignmentRepository = assignmentRepository;
     
