@@ -14,7 +14,7 @@ public static class AssignmentMapper
             Title = assignmentModel.Title,
             StartAt = assignmentModel.CreatedAt,
             CloseAt = assignmentModel.CloseAt,
-            CreatedById = assignmentModel.CreatedById,
+            // CreatedById = assignmentModel.CreatedById,
         };
     }
 
@@ -25,7 +25,7 @@ public static class AssignmentMapper
             Title = assignmentDto.Title,
             CloseAt = assignmentDto.CloseAt,
             StartAt = assignmentDto.StartAt,
-            CreatedById = assignmentDto.CreatedById,
+            // CreatedById = assignmentDto.CreatedById,
         };
     }
 
@@ -36,7 +36,7 @@ public static class AssignmentMapper
             Title = assignmentDto.Title,
             CloseAt = assignmentDto.CloseAt,
             StartAt = assignmentDto.StartAt,
-            CreatedById = assignmentDto.CreatedById,
+            // CreatedById = assignmentDto.CreatedById,
         };
     }
 }

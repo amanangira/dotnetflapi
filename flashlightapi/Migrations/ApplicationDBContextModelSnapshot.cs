@@ -259,7 +259,7 @@ namespace flashlightapi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Assignment");
+                    b.ToTable("Assignment", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
