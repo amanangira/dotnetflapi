@@ -1,7 +1,9 @@
 using flashlightapi.Data;
+using flashlightapi.DTOs.common;
 using flashlightapi.Models;
 using flashlightapi.Repository;
 using Microsoft.EntityFrameworkCore;
+using Queryable = flashlightapi.DTOs.common.Queryable;
 
 namespace flashlightapi.Interfaces;
 
@@ -9,9 +11,18 @@ public class AssignmentRepository(ApplicationDBContext _dbContext) : IAssignment
 {
     private ApplicationDBContext _dbContext = _dbContext;
     
-    public async Task<List<Assignment>> ListAsync()
+    public async Task<List<Assignment>> ListAsync(Queryable query)
     {
-        return await _dbContext.Assignment.ToListAsync();
+        var builder = _dbContext.Assignment.AsQueryable();
+        if (query.Page > 0)
+        {
+            var skipCount = (int)(query.Page * (query.PageSize - 1));
+            builder = builder.
+                Skip(skipCount).
+                Take((int)query.PageSize);
+        }
+        
+        return await builder.ToListAsync();
     }
 
     public async Task<Assignment?> GetByIdAsync(Guid id)

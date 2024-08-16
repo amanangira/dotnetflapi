@@ -1,3 +1,5 @@
+using flashlightapi.Models;
+
 namespace flashlightapi.DTOs.assignment;
 
 public class AssignmentDTO
