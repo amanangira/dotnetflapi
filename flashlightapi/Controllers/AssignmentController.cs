@@ -1,7 +1,5 @@
 using AutoMapper;
-using flashlightapi.Data;
 using flashlightapi.DTOs.assignment;
-using flashlightapi.DTOs.common;
 using flashlightapi.Mappers;
 using flashlightapi.Repository;
 using Microsoft.AspNetCore.Authorization;
@@ -51,5 +49,11 @@ public class AssignmentController(IAssignmentRepository assignmentRepository, IM
         return (assignments == null)
             ? NotFound()
             : Ok(_mapper.Map<List<AssignmentDTO>>(assignments));
+    }
+
+
+    public bool FooFuncForTesting(bool arg)
+    {
+        return !arg;
     }
 }
