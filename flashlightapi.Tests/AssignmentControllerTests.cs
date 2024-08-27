@@ -27,7 +27,7 @@ public class AssignmentControllerTests
     }
     
     [Fact]
-    public async Task List_WithValidQueryReturnsOkResult()
+    public async Task ListWithValidQueryReturnsOkResult()
     {
         // Arrange
         Guid id1, id2 ;
