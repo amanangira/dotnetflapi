@@ -7,10 +7,7 @@ public class CreateAssignmentDTO
 {
     [Required]
     public string Title { get; set; }
-
-    [Required]
-    public Guid CreatedById { get; set; }
-
+    
     [Required]
     public DateTime StartAt { get; set; }
 

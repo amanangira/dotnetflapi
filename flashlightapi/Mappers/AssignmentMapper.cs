@@ -36,7 +36,6 @@ public static class AssignmentMapper
             Title = createAssignmentDto.Title,
             CloseAt = createAssignmentDto.CloseAt,
             StartAt = createAssignmentDto.StartAt,
-            CreatedById = createAssignmentDto.CreatedById.ToString(),
         };
     }
 }
