@@ -21,7 +21,7 @@ public class AssignmentControllerTests
     public AssignmentControllerTests()
     {
         _mapperMock = new Mock<IMapper>();
-        _manager = new Mock<UserManager<AppUser>>();
+        _manager = new Mock<UserManager<AppUser>>((Mock.Of<IUserStore<AppUser>>()), null, null, null, null, null, null, null, null);
         _assignmentRepositoryMock = new Mock<IAssignmentRepository>();
         _controller = new AssignmentController(_manager.Object, _assignmentRepositoryMock.Object, _mapperMock.Object);
     }
@@ -64,5 +64,21 @@ public class AssignmentControllerTests
         
         // Verify that the mapper method was called once with the correct parameters
         _mapperMock.Verify(mapper => mapper.Map<List<AssignmentDTO>>(assignments), Times.Once);
+    }
+
+    [Fact]
+    public async Task ListWithValidQueryReturnsNotFound()
+    {
+        // setup 
+        Queryable query = new Queryable() { Page = 2, PageSize = 10};
+        _assignmentRepositoryMock.Setup(repo => repo.ListAsync(query)).ReturnsAsync(value: null);
+    
+        
+        // act
+        var result = await _controller.List(query);
+        
+        // assert
+        result.ShouldBeOfType<NotFoundResult>();
+        _assignmentRepositoryMock.Verify(repo => repo.ListAsync(query), Times.Once);
     }
 }

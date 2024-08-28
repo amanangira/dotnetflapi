@@ -2,7 +2,6 @@ using AutoMapper;
 using flashlightapi.DTOs.assignment;
 using flashlightapi.Mappers;
 using flashlightapi.Models;
-using System.Security.Claims;
 using flashlightapi.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
