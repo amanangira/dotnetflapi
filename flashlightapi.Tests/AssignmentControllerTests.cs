@@ -1,8 +1,11 @@
+using System.Security.Claims;
 using AutoMapper;
 using flashlightapi.Controllers;
 using flashlightapi.DTOs.assignment;
+using flashlightapi.Mappers;
 using flashlightapi.Models;
 using flashlightapi.Repository;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -80,5 +83,93 @@ public class AssignmentControllerTests
         // assert
         result.ShouldBeOfType<NotFoundResult>();
         _assignmentRepositoryMock.Verify(repo => repo.ListAsync(query), Times.Once);
+    }
+
+
+    [Fact]
+    public async Task GetWithValidIdReturnsOk()
+    {
+        // setup 
+        Guid id = System.Guid.NewGuid();
+        var assignment = new Assignment()
+        {
+            Id = id,
+            Title = "Assignment 1",
+            CreatedById = System.Guid.NewGuid().ToString(),
+        };
+        var assignmentDTO = assignment.ToAssignmentDTO();
+
+        _assignmentRepositoryMock.Setup(repo => repo.GetByIdAsync(id)).ReturnsAsync(assignment);
+        _mapperMock.Setup(mapper => mapper.Map<AssignmentDTO>(assignment)).Returns(assignmentDTO);
+
+        // act
+        var result = await _controller.Get(id.ToString());
+
+        // assert
+        result.ShouldBeOfType<OkObjectResult>();
+        var resultObj = (OkObjectResult)result;
+        resultObj.Value.ShouldBe(assignmentDTO);
+        
+        _assignmentRepositoryMock.Verify(repo => repo.GetByIdAsync(id), Times.Once);
+        _mapperMock.Verify(mapper => mapper.Map<AssignmentDTO>(assignment), Times.Once);
+    }
+
+    [Fact]
+    public async Task GetWithInvalidIdReturnsNotFound()
+    {
+        // setup 
+        Guid id = System.Guid.NewGuid();
+        var assignment = new Assignment()
+        {
+            Id = id,
+            Title = "Assignment 1",
+            CreatedById = System.Guid.NewGuid().ToString(),
+        };
+
+        _assignmentRepositoryMock.Setup(repo => repo.GetByIdAsync(id)).ReturnsAsync(value: null);
+
+        // act
+        var result = await _controller.Get(id.ToString());
+
+        // assert
+        result.ShouldBeOfType<NotFoundResult>();
+        
+        _assignmentRepositoryMock.Verify(repo => repo.GetByIdAsync(id), Times.Once);
+    }
+
+    [Fact]
+    public async Task CreateWithValidInputsReturnsOk()
+    {
+        // arrange
+        var input = new CreateAssignmentDTO()
+        {
+            Title = "Assignment One",
+            StartAt = DateTime.Today,
+            CloseAt = DateTime.Today.AddDays(30),
+        };
+
+        var inputModel = input.ToAssignmentModel();
+        var outputModel = inputModel;
+        var userId = Guid.NewGuid();
+        outputModel.Id = It.IsAny<Guid>();
+        outputModel.CreatedById = userId.ToString();
+        var expectedResultDto = outputModel.ToAssignmentDTO(); 
+        
+        _manager.Setup(manager => manager.GetUserAsync(It.IsAny<ClaimsPrincipal>())).ReturnsAsync(new AppUser(){Id = userId.ToString()});
+        _assignmentRepositoryMock.Setup(repo => repo.CreateAsync(inputModel)).ReturnsAsync(outputModel);
+        _mapperMock.Setup(mapper => mapper.Map<AssignmentDTO>(outputModel)).Returns(expectedResultDto);
+        
+        // act 
+        var result = await _controller.Create(input);
+
+
+        // assert
+        result.ShouldBeOfType<CreatedAtActionResult>();
+        var resultObj = (CreatedAtActionResult)result;
+        resultObj.Value.ShouldBe(expectedResultDto);
+        
+        _manager.Verify( manager => manager.GetUserAsync(It.IsAny<ClaimsPrincipal>()), Times.Once);
+        _assignmentRepositoryMock.Verify( repo => repo.CreateAsync(inputModel), Times.Once);
+        _mapperMock.Verify(mapper => mapper.Map<AssignmentDTO>(outputModel), Times.Once);
     }
 }

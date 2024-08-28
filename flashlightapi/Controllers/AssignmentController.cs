@@ -15,23 +15,33 @@ namespace flashlightapi.Controllers;
 [ApiController]
 [Route("/api/assignment")]
 
-public class AssignmentController(
-    UserManager<AppUser> manager,
-    IAssignmentRepository assignmentRepository, 
-    IMapper mapper): ControllerBase
+public class AssignmentController: ControllerBase
 {
-    private readonly UserManager<AppUser> _manager = manager;
+    private readonly UserManager<AppUser> _manager;
     
-    private readonly IAssignmentRepository _assignmentRepository = assignmentRepository;
+    private readonly IAssignmentRepository _assignmentRepository;
     
-    private readonly IMapper _mapper = mapper;
+    private readonly IMapper _mapper;
+
+    public AssignmentController(UserManager<AppUser> manager,
+        IAssignmentRepository assignmentRepository, 
+        IMapper mapper)
+    {
+        _manager = manager;
+        _assignmentRepository = assignmentRepository;
+        _mapper = mapper;
+        ControllerContext = new ControllerContext()
+        {
+            HttpContext = new DefaultHttpContext()
+        };
+    }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> Get([FromRoute] string id)
     {
         var assignment = await _assignmentRepository.GetByIdAsync(Guid.Parse(id));
 
-        return Ok(_mapper.Map<AssignmentDTO>(assignment));
+        return assignment != null ? Ok(_mapper.Map<AssignmentDTO>(assignment)) : NotFound();
     }
     
     [HttpPost]
